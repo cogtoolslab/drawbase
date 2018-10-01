@@ -1,0 +1,1 @@
+In this directory, include scripts to: 1) upload image/video data to Amazon S3 and 2) generate metadata to store in the `stimuli` database. 

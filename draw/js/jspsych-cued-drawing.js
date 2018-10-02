@@ -15,12 +15,13 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         default: undefined,
         description: 'The label used to cue drawing.'
       }, 
-      cue_image: {
+      cue_html: {
         type: jsPsych.plugins.parameterType.IMAGE,
-        pretty_name: 'cue_image',
-        default: undefined,
-        description: 'The image used to cue drawing.'
-      }, 
+        pretty_name: 'cue image HTML',
+        default: '<img src="%imageURL%" height="448" width="448" id="cue_html">',
+        array: true,
+        description: 'The html of the image cue used to prompt drawing. Can create own style.'
+      },      
       cue_image_url: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'cue_image_urls',
@@ -28,12 +29,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         array: true,
         description: 'The URL for the image cues.'
       },
-      cue_video: {
-        type: jsPsych.plugins.parameterType.VIDEO,
-        pretty_name: 'cue_video',
-        default: undefined,
-        description: 'The video used to cue drawing.'
-      }, 
       cue_duration: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'cue_duration',
@@ -51,33 +46,110 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
+    // print errors if the parameters are not correctly formatted 
     if(typeof trial.cue_label === 'undefined'){
       console.error('Required parameter "cue_label" missing in jspsych-cued-drawing');
     }
 
-    // wrapper function to show everything, call this when you've waited what you
+    // drawing canvas parameters 
+    var canvas = document.getElementById("sketchpad"),
+        ctx=canvas.getContext("2d");
+    canvas.height = 448; // set to 80% of the actual screen
+    canvas.width = canvas.height;
+
+    // initialize paper.js
+    paper.setup('sketchpad');
+
+    // wrapper function to show cue, this is called when you've waited as long as you
     // reckon is long enough for the data to come back from the db
-    function show_display() { 
+    function show_cue() { 
 
-      // display cue
+      // display prompt if there is one
+      if (trial.prompt !== null) {
+        var html = '<div id="prompt">' + trial.prompt + '</div>';
+      }         
 
-      // display prompt
+      // display label
+      html += '<div><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
 
-      // display canvas
+      // display image if the condition is 'photo'
+      if (trial.condition == 'photo') {
+        // place cue image inside the cue image container (which has fixed location)
+        html += '<div id="cue-container">';
+          // embed images inside the response button divs
+          var str = trial.cue_html.replace(/%imageURL%/g, trial.cue_URL);
+          html += trial.cue_html;        
+        html += '</div>'; 
+      }
 
-      // display 
+      // actually assign html to display_element.innerHTML
+      display_element.innerHTML = html;
+
+    }
+
+    // wait for a little bit for data to come back from db, then show_display
+    setTimeout(function() {show_cue(); }, 1500);    
+
+    function show_canvas() {  
+      // fade out the cue
+
+      // fade in the canvas       
+    }
+
+    function update_canvas() {
+      // update canvas to render each stroke
+
+      // send individual stroke data to db
+    }
+
+    // actually send stroke data back to server to save to db
+    function send_stroke_data(path) {
+      path.selected = false;
+      var svgString = path.exportSVG({asString: true});
+      // specify other metadata
+
+      stroke_data = {
+          dbname:'drawbase',
+          colname: 'photodraw2', 
+          iterationName: 'development',
+          eventType: 'stroke',
+          svg: svgString,
+          category: trial.cue_label,
+          trialNum: trial.trialNum,
+          // startTrialTime: startTrialTime,
+          // startStrokeTime: startStrokeTime,
+          // endStrokeTime: endStrokeTime,
+          time: Date.now()
+      };
+
+      // send stroke data to server
+      console.log(stroke_data);
+      socket.emit('stroke',stroke_data);
 
     }
 
 
+    function end_trial() {
+      // triggered either when submit button is clicked or time runs out      
 
-    // data saving
-    var trial_data = {
-      parameter_name: 'parameter value'
-    };
+      // sketch rendering to base64 encoding
 
-    // end trial
-    jsPsych.finishTrial(trial_data);
+      // data saving
+      var trial_data = {
+        cue_label: 'PLACEHOLDER',
+        cue_URL: 'CUE_URL'      
+
+      };
+
+      // clear the display
+      display_element.innerHTML = '';
+
+      // end trial
+      jsPsych.finishTrial(trial_data);
+
+    }
+
+
   };
 
   return plugin;

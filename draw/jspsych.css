@@ -5,9 +5,35 @@
  * experiments look polished without any additional styles.
  */
 
+
+#sketchpad {
+    height: 448px;
+    width: 448px;
+    position: absolute;
+    top: 12vh;
+    right:0;left:0;
+    float: top;
+    margin: auto;
+    background: #ffffff;
+    border: solid 1px #999;
+}
+
+#cue-container {
+    height: 448px;
+    width: 448px;
+    position: absolute;
+    top: 12vh;
+    right:0;left:0;
+    float: top;
+    margin: auto;
+    background: #ffffff;
+    border: solid 1px #999;
+}
+
  /* Container holding jsPsych content */
 
  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
 
  .jspsych-display-element {
    display: flex;

@@ -253,7 +253,6 @@ jsPsych.plugins["image-button-response"] = (function() {
 
     };
 
-
     // hide image if timing is set
     if (trial.utterance_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {

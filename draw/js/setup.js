@@ -28,7 +28,7 @@ function setupGame () {
     var trials = new Array(tmp.num_trials + 2);
 
     consentHTML = {
-      'str1' : '<p> In this HIT, you will make some drawings of objects! On each trial, you will first see a word/image/video prompt, then have 30 seconds to produce your drawing. Your goal is to make your drawing so that it can be recognizable to someone else who is trying to identify what you were trying to draw. </p>',
+      'str1' : '<p> In this HIT, you will make some drawings of objects! On each trial, you will first see a word/image prompt, then have 30 seconds to produce your drawing. Your goal is to make your drawing so that it can be recognizable to someone else who is trying to identify what you were trying to draw. </p>',
       'str2' : '<p> We expect the average game to last approximately 5-10 minutes, including the time it takes to read instructions.</p>',
       'str3' : "<p> If you encounter a problem or error, send us an email (sketchloop@gmail.com) and we will make sure you're compensated for your time! Please pay attention and do your best! Thank you!</p><p> Note: We recommend using Chrome. We have not tested this HIT in other browsers.</p>",
       'str4' : ["<u><p id='legal'>Consenting to Participate:</p></u>",
@@ -36,7 +36,7 @@ function setupGame () {
     }
     // add welcome page
     instructionsHTML = {
-      'str1' : "<p> Here's how the game will work: On each trial, you will first see a word/image/video prompt, then have 30 seconds to produce your drawing. Your goal is to make your drawing so that it can be recognizable to someone else who is trying to identify what you were trying to draw.",
+      'str1' : "<p> Here's how the game will work: On each trial, you will first see a word/image prompt, then have 30 seconds to produce your drawing. Your goal is to make your drawing so that it can be recognizable to someone else who is trying to identify what you were trying to draw.",
       'str2' : '<p> Please do not add any words, text, or surrounding context around your object drawing. And please try your best!',
       'str3' : "<p> Once you are finished, the HIT will be automatically submitted for approval. If you enjoyed this HIT, please know that you are welcome to perform it multiple times. Let's begin! </p>"
     }

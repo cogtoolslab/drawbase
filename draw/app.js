@@ -57,8 +57,6 @@ io.on('connection', function (socket) {
     writeDataToMongo(data);
   });
 
-
-
   socket.on('getStim', function(data) {
     sendSingleStim(socket, data);
   });

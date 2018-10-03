@@ -36,7 +36,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       cue_duration: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'cue_duration',
-        default: null,
+        default: 1000,
         description: 'How long to show the cue (in milliseconds).'
       }, 
       prompt: {
@@ -57,6 +57,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     // create new sketchpad
     sketchpad = new Sketchpad();
+
+    // wait for a little bit for data to come back from db, then show_display
+    setTimeout(function() {show_cue(); }, 1500);  
 
     // wrapper function to show cue, this is called when you've waited as long as you
     // reckon is long enough for the data to come back from the db
@@ -80,6 +83,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         html += '</div>'; 
       }
 
+      // display button to submit drawing when finished
+      html += '<button id="submit_button" class="green" >submit</button>'
+      guessBtn.disabled = true; // button is disabled until at least one stroke
+      guessBtn.addEventListener('click', submit_drawing);
+
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
 
@@ -87,23 +95,32 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       currStrokeNum = 0;
 
       // wait for the cue duration, then trigger display of the drawing canvas
+      // setTimeout(function() {show_canvas(); }, trial.cue_duration);  
+      jsPsych.pluginAPI.setTimeout(function() {show_canvas();}, trial.cue_duration);
 
-
-    }
-
-    // wait for a little bit for data to come back from db, then show_display
-    setTimeout(function() {show_cue(); }, 1500);    
+    }  
 
     function show_canvas() {  
-      // fade out the cue
+      // remove the cue
+      jsPsych.pluginAPI.setTimeout(function() {
+        display_element.querySelector('#cue_html').style.visibility = 'hidden';
+      }, 0);
 
-      // fade in the canvas       
+      // show the canvas 
+      jsPsych.pluginAPI.setTimeout(function() {
+        display_element.querySelector('#sketchpad').style.visibility = 'visible';
+      }, 100);
     }
 
-    function update_canvas() {
-      // update canvas to render each stroke
+    function submit_drawing() {
+      // submit button was clicked to submit the drawing to the db
 
-      // send individual stroke data to db
+      // disable button to prevent double firing
+      guessBtn.disabled=true;
+
+      // end trial      
+      jsPsych.pluginAPI.setTimeout(function() {end_trial();}, 100);
+
     }
 
     // actually send stroke data back to server to save to db
@@ -144,8 +161,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       };
 
-      // clear the display
+      // clear the HTML in the display element
       display_element.innerHTML = '';
+
+      // clear sketchpad canvas and reset drawing state vars
+      project.activeLayer.removeChildren();
+
 
       // end trial
       jsPsych.finishTrial(trial_data);
@@ -163,6 +184,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
 // globals
 var drawingAllowed = true;
+var submitAllowed = false; // allow submission once there is at least one stroke
 var strokeColor = 'black';
 var strokeWidth = 5;
 var simplifyParam = 10;
@@ -239,6 +261,9 @@ function endStroke(event) {
     // Simplify path to reduce data sent
     path.simplify(simplifyParam);
 
-  // reset path
-  path = [];
+    // send stroke data to db.
+    send_stroke_data(path);
+
+    // reset path
+    path = [];
 }

@@ -12,8 +12,14 @@ var
     sendPostRequest = require('request').post;
 
 
-// define number of trials to fetch from database (what is length of each recog HIT?)
-var num_trials = 56;
+////////// EXPERIMENT GLOBAL PARAMS //////////
+
+// define number of trials to fetch from database (what is length of each HIT?)
+var num_trials = 32;
+// define "fetch mode": are data fetched from db on a per-trial basis or in a session-sized batch?
+var fetch_mode = 'trial'; // options = ['trial','session']
+
+//////////////////////////////////////////////
 
 var gameport;
 
@@ -51,8 +57,10 @@ io.on('connection', function (socket) {
     writeDataToMongo(data);
   });
 
+
+
   socket.on('getStim', function(data) {
-    sendStim(socket, data);
+    sendSingleStim(socket, data);
   });
 
   // upon connecting, tell the client some metainfo
@@ -84,11 +92,11 @@ var UUID = function() {
   return id;
 };
 
-function sendStim(socket, data) {
-  sendPostRequest('http://localhost:6000/db/getstims', {
+function sendSingleStim(socket, data) {
+  sendPostRequest('http://localhost:6000/db/getsinglestim', {
     json: {
       dbname: 'stimuli',
-      colname: 'shapenet_chairs_speaker_eval',
+      colname: 'photodraw2',
       numTrials: 1,
       gameid: data.gameID
     }
@@ -99,7 +107,7 @@ function sendStim(socket, data) {
       console.log(`error getting stims: ${error} ${body}`);
       console.log(`falling back to local stimList`);
       socket.emit('stimulus', {
-        stim: _.sampleSize(require('./shapenet_chairs_speaker_eval.js'), 1)
+        stim: _.sampleSize(require('./photodraw2_meta.js'), 1)
       });
     }
   });

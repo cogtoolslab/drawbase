@@ -176,13 +176,9 @@ function serve() {
  
       // response.send(collection.limit(maxRecords).toArray())
 
-      // also, note sure if we need to mark...
-
+      // also, not sure if we need to mark...
       // markAnnotation(collection, request.body.gameid, results[0]['_id']);
     });
-
-
-
 
 
     app.listen(port, () => {

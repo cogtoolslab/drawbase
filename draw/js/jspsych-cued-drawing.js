@@ -1,6 +1,10 @@
-/*
- * Example plugin template
- */
+/**
+ * jspsych-cued-drawing
+ * Judy Fan
+ *
+ * plugin for displaying a cue and getting drawing response
+ *
+ **/ 
 
 jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
@@ -51,18 +55,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       console.error('Required parameter "cue_label" missing in jspsych-cued-drawing');
     }
 
-    // drawing canvas parameters 
-    var canvas = document.getElementById("sketchpad"),
-        ctx=canvas.getContext("2d");
-    canvas.height = 448; // set to 80% of the actual screen
-    canvas.width = canvas.height;
-
-    // initialize paper.js
-    paper.setup('sketchpad');
+    // create new sketchpad
+    sketchpad = new Sketchpad();
 
     // wrapper function to show cue, this is called when you've waited as long as you
     // reckon is long enough for the data to come back from the db
-    function show_cue() { 
+    function show_cue() {       
 
       // display prompt if there is one
       if (trial.prompt !== null) {
@@ -84,6 +82,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
+
+      // reset global current stroke number variable
+      currStrokeNum = 0;
+
+      // wait for the cue duration, then trigger display of the drawing canvas
+
 
     }
 
@@ -128,7 +132,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     }
 
-
     function end_trial() {
       // triggered either when submit button is clicked or time runs out      
 
@@ -154,3 +157,88 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   return plugin;
 })();
+
+
+///////// DRAWING PARAMS ///////////
+
+// globals
+var drawingAllowed = true;
+var strokeColor = 'black';
+var strokeWidth = 5;
+var simplifyParam = 10;
+var currStrokeNum = 0;
+
+///////// CORE DRAWING FUNCTIONS ///////////
+
+function Sketchpad() {
+  // initialize paper.js
+  paper.setup('sketchpad');
+  view.viewSize = new Size(448,448);
+}
+
+// bind events to the sketchpad canvas
+Sketchpad.prototype.setupTool = function() {
+  path = [];
+  var tool = new Tool();
+
+  tool.onMouseMove = function(event) {
+    if(drawingAllowed) {
+      var point = event.point.round();
+      currMouseX = point.x;
+      currMouseY = point.y;
+      if(event.modifiers.shift & !_.isEmpty(path)) {
+        path.add(point);
+      }
+    }
+  };
+
+  tool.onMouseDown = function(event) {
+    startStroke(event);
+  };
+
+  tool.onMouseDrag = function(event) {
+    if (drawingAllowed && !_.isEmpty(path)) {
+      var point = event.point.round();
+      currMouseX = point.x;
+      currMouseY = point.y;
+      path.add(point);
+    }
+  };
+
+  tool.onMouseUp = function(event) {
+    endStroke(event);
+  };
+
+};
+
+function startStroke(event) {
+    if (drawingAllowed) {
+      startStrokeTime = Date.now();
+      // If a path is ongoing, send it along before starting this new one
+      if(!_.isEmpty(path)) {
+        endStroke(event);
+      }
+
+      var point = (event ? event.point.round() :
+       {x: currMouseX, y: currMouseY});
+        path = new Path({
+          segments: [point],
+          strokeColor: strokeColor,
+          strokeWidth: strokeWidth
+        });
+    }
+  };
+
+function endStroke(event) {
+  // Only send stroke if actual line (single points don't get rendered)
+  if (drawingAllowed && path.length > 1) {
+    endStrokeTime = Date.now();
+    // Increment stroke num
+    currStrokeNum += 1;
+
+    // Simplify path to reduce data sent
+    path.simplify(simplifyParam);
+
+  // reset path
+  path = [];
+}

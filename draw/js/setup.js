@@ -82,10 +82,10 @@ function setupGame () {
       oldCallback = newCallback;
       var newCallback = function(d) {
         console.log('data retrieved from db: ',d);
-      	trial.utterance = d.utt;
-        trial.choices = _.shuffle([d.target.url, d.distractor1.url, d.distractor2.url]);
+      	trial.category = d.category;
+        trial.image_id = d.image_id;
+        trial.image_url = d.image_url;
         trial.condition = d.condition;
-        trial.family = d.family;
         trial._id = d._id;
         trial.shuffle_ind = d.shuffler_ind;
       };

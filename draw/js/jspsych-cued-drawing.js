@@ -85,8 +85,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" >submit</button>'
-      guessBtn.disabled = true; // button is disabled until at least one stroke
-      guessBtn.addEventListener('click', submit_drawing);
+      submit_button.addEventListener('click', end_trial);
+      submit_button.disabled = true; // button is disabled until at least one stroke
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
@@ -110,17 +110,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         display_element.querySelector('#sketchpad').style.visibility = 'visible';
       }, 100);
-    }
-
-    function submit_drawing() {
-      // submit button was clicked to submit the drawing to the db
-
-      // disable button to prevent double firing
-      guessBtn.disabled=true;
-
-      // end trial      
-      jsPsych.pluginAPI.setTimeout(function() {end_trial();}, 100);
-
     }
 
     // actually send stroke data back to server to save to db
@@ -149,8 +138,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     }
 
+    // triggered either when submit button is clicked or time runs out
+    // sends trial data to database
     function end_trial() {
-      // triggered either when submit button is clicked or time runs out      
+
+      // disable button to prevent double firing
+      submit_button.disabled=true;
 
       // sketch rendering to base64 encoding
 
@@ -166,7 +159,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // clear sketchpad canvas and reset drawing state vars
       project.activeLayer.removeChildren();
-
 
       // end trial
       jsPsych.finishTrial(trial_data);
@@ -254,7 +246,13 @@ function startStroke(event) {
 function endStroke(event) {
   // Only send stroke if actual line (single points don't get rendered)
   if (drawingAllowed && path.length > 1) {
+    
+    // allow submission of button
+    guessBtn.disabled=false;
+
+    // record end stroke time
     endStrokeTime = Date.now();
+    
     // Increment stroke num
     currStrokeNum += 1;
 

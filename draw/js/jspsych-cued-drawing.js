@@ -85,8 +85,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" >submit</button>'
-      submit_button.addEventListener('click', end_trial);
-      submit_button.disabled = true; // button is disabled until at least one stroke
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
@@ -101,6 +99,10 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     }  
 
     function show_canvas() {  
+
+      // add event listener to submit button once response window opens
+      submit_button.addEventListener('click', end_trial);
+      submit_button.disabled = true; // button is disabled until at least one stroke      
 
       // instantiate new sketchpad
       sketchpad = new Sketchpad();

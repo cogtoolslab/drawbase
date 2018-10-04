@@ -81,7 +81,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           var str = trial.cue_html.replace(/%imageURL%/g, trial.cue_URL);
           html += trial.cue_html;        
         html += '</div>'; 
-      }
+      // }
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" >submit</button>'

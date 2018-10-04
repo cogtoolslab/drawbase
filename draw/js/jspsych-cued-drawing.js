@@ -74,7 +74,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       html += '<div><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
 
       // display image if the condition is 'photo'
-      if (trial.condition == 'photo') {
+      // if (trial.condition == 'photo') {
         // place cue image inside the cue image container (which has fixed location)
         html += '<div id="cue-container">';
           // embed images inside the response button divs

@@ -110,6 +110,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // instantiate new sketchpad
       sketchpad = new Sketchpad();
+      sketchpad.setupTool();
 
       // remove the cue and show the canvas
       jsPsych.pluginAPI.setTimeout(function() {

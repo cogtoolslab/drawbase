@@ -22,7 +22,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       cue_html: {
         type: jsPsych.plugins.parameterType.IMAGE,
         pretty_name: 'cue image HTML',
-        default: '<img src="%imageURL%" height="448" width="448" id="cue_html">',
+        default: '<img src="imageURL" height="448" width="448" id="cue_html">',
         array: true,
         description: 'The html of the image cue used to prompt drawing. Can create own style.'
       },      
@@ -81,7 +81,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         // place cue image inside the cue image container (which has fixed location)
         html += '<div id="cue-container">';
           // embed images inside the response button divs
-          var str = trial.cue_html.replace(/%imageURL%/g, trial.cue_image_url);
+          var str = trial.cue_html.replace('imageURL', trial.cue_image_url);
           html += trial.cue_html;        
         html += '</div>'; 
       // }

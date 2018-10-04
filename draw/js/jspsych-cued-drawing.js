@@ -203,7 +203,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       canvas.addEventListener('mouseup',onMouseUp, false);
 
       // initialize path
-      var path = new Path();
+      var path = [];
 
       // define 
       function onMouseMove(event) {

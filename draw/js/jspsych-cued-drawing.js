@@ -56,7 +56,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     }
 
     // create new sketchpad
-    sketchpad = new Sketchpad();
+    sketchpad = new Sketchpad();    
 
     // wait for a little bit for data to come back from db, then show_display
     setTimeout(function() {show_cue(); }, 1500);  
@@ -170,101 +170,103 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   };
 
+  ///////// DRAWING PARAMS ///////////
+
+  // globals
+  var drawingAllowed = true;
+  var submitAllowed = false; // allow submission once there is at least one stroke
+  var strokeColor = 'black';
+  var strokeWidth = 5;
+  var simplifyParam = 10;
+  var currStrokeNum = 0;
+
+  ///////// CORE DRAWING FUNCTIONS ///////////
+
+  function Sketchpad() {
+    // initialize paper.js
+    paper.setup('sketchpad');
+    view.viewSize = new Size(448,448);
+  }
+
+  // bind events to the sketchpad canvas
+  Sketchpad.prototype.setupTool = function() {
+    path = [];
+    var tool = new Tool();
+
+    tool.onMouseMove = function(event) {
+      if(drawingAllowed) {
+        var point = event.point.round();
+        currMouseX = point.x;
+        currMouseY = point.y;
+        if(event.modifiers.shift & !_.isEmpty(path)) {
+          path.add(point);
+        }
+      }
+    };
+
+    tool.onMouseDown = function(event) {
+      startStroke(event);
+    };
+
+    tool.onMouseDrag = function(event) {
+      if (drawingAllowed && !_.isEmpty(path)) {
+        var point = event.point.round();
+        currMouseX = point.x;
+        currMouseY = point.y;
+        path.add(point);
+      }
+    };
+
+    tool.onMouseUp = function(event) {
+      endStroke(event);
+    };
+
+  };
+
+  function startStroke(event) {
+      if (drawingAllowed) {
+        startStrokeTime = Date.now();
+        // If a path is ongoing, send it along before starting this new one
+        if(!_.isEmpty(path)) {
+          endStroke(event);
+        }
+
+        var point = (event ? event.point.round() :
+         {x: currMouseX, y: currMouseY});
+          path = new Path({
+            segments: [point],
+            strokeColor: strokeColor,
+            strokeWidth: strokeWidth
+          });
+      }
+    };
+
+  function endStroke(event) {
+    // Only send stroke if actual line (single points don't get rendered)
+    if (drawingAllowed && path.length > 1) {
+      
+      // allow submission of button if endStroke is called 
+      guessBtn.disabled=false;
+
+      // record end stroke time
+      endStrokeTime = Date.now();
+      
+      // Increment stroke num
+      currStrokeNum += 1;
+
+      // Simplify path to reduce data sent
+      path.simplify(simplifyParam);
+
+      // send stroke data to db.
+      send_stroke_data(path);
+
+      // reset path
+      path = [];
+    }
+  }
+  
+
   return plugin;
 })();
 
 
-///////// DRAWING PARAMS ///////////
-
-// globals
-var drawingAllowed = true;
-var submitAllowed = false; // allow submission once there is at least one stroke
-var strokeColor = 'black';
-var strokeWidth = 5;
-var simplifyParam = 10;
-var currStrokeNum = 0;
-
-///////// CORE DRAWING FUNCTIONS ///////////
-
-function Sketchpad() {
-  // initialize paper.js
-  paper.setup('sketchpad');
-  view.viewSize = new Size(448,448);
-}
-
-// bind events to the sketchpad canvas
-Sketchpad.prototype.setupTool = function() {
-  path = [];
-  var tool = new Tool();
-
-  tool.onMouseMove = function(event) {
-    if(drawingAllowed) {
-      var point = event.point.round();
-      currMouseX = point.x;
-      currMouseY = point.y;
-      if(event.modifiers.shift & !_.isEmpty(path)) {
-        path.add(point);
-      }
-    }
-  };
-
-  tool.onMouseDown = function(event) {
-    startStroke(event);
-  };
-
-  tool.onMouseDrag = function(event) {
-    if (drawingAllowed && !_.isEmpty(path)) {
-      var point = event.point.round();
-      currMouseX = point.x;
-      currMouseY = point.y;
-      path.add(point);
-    }
-  };
-
-  tool.onMouseUp = function(event) {
-    endStroke(event);
-  };
-
-};
-
-function startStroke(event) {
-    if (drawingAllowed) {
-      startStrokeTime = Date.now();
-      // If a path is ongoing, send it along before starting this new one
-      if(!_.isEmpty(path)) {
-        endStroke(event);
-      }
-
-      var point = (event ? event.point.round() :
-       {x: currMouseX, y: currMouseY});
-        path = new Path({
-          segments: [point],
-          strokeColor: strokeColor,
-          strokeWidth: strokeWidth
-        });
-    }
-  };
-
-function endStroke(event) {
-  // Only send stroke if actual line (single points don't get rendered)
-  if (drawingAllowed && path.length > 1) {
-    
-    // allow submission of button if endStroke is called 
-    guessBtn.disabled=false;
-
-    // record end stroke time
-    endStrokeTime = Date.now();
-    
-    // Increment stroke num
-    currStrokeNum += 1;
-
-    // Simplify path to reduce data sent
-    path.simplify(simplifyParam);
-
-    // send stroke data to db.
-    send_stroke_data(path);
-
-    // reset path
-    path = [];
-  }
-}

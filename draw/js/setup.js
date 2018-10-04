@@ -100,13 +100,14 @@ function setupGame () {
       trials[k] = {
       	type: tmp.type,
       	iterationName : tmp.iterationName,
-        num_trials: tmp.num_trials,                
+        num_trials: tmp.num_trials,  
+        dev_mode: tmp.dev_mode,
       	trialNum : i, // trial number
       	gameID: id,
-        prompt: "Please select the object that best matches the description.",
-        utterance: "Placeholder utterance.", // to be filled in dynamically 
-        choices: ['https://tinyurl.com/y9rzglpn','https://tinyurl.com/y9rzglpn','https://tinyurl.com/y9rzglpn'], // to be filled in dynamically
-        dev_mode: tmp.dev_mode,
+        cue_label: "CUE_LABEL",
+        image_id: "IMAGE_ID", 
+        cue_image_url: "https://s3.amazonaws.com/drawbase-demo/airplane_0.jpg",
+        condition: 'CONDITION',              
         on_finish: main_on_finish,
       	on_start: main_on_start
       };

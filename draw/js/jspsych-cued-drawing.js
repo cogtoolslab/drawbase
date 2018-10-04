@@ -202,23 +202,24 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var path;
       var tool = new Tool();
 
-      console.log('sketchpad.setupTool called');
-
       // define mouse interaction events
       tool.onMouseMove = function(event) {         
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
+          console.log(point);
           if (!_.isEmpty(path)) {
             path.add(point);
           }
       }
 
-      tool.onMouseDown = function(event) {
+      tool.onMouseDown = function(event) {        
+        console.log('onMouseDown',event.point.round());
         startStroke(event);        
       }
 
       tool.onMouseUp = function (event) {
+        console.log('onMouseDown',event.point.round());
         endStroke(event);                
       }
 

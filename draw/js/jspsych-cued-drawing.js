@@ -48,7 +48,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     }
   }
 
-  plugin.trial = function(display_element, trial) {
+  plugin.trial = function(display_element, trial) {    
 
     // print errors if the parameters are not correctly formatted 
     if(typeof trial.cue_label === 'undefined'){
@@ -184,6 +184,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     var strokeWidth = 5;
     var simplifyParam = 10;
     var currStrokeNum = 0;
+    var globalPath;
 
     ///////// CORE DRAWING FUNCTIONS ///////////
 
@@ -205,10 +206,10 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       tool.onMouseMove = function(event) {
         if(drawingAllowed) {
           var point = event.point.round();
-          currMouseX = point.x;
-          currMouseY = point.y;
+          globalPath.currMouseX = point.x;
+          globalPath.currMouseY = point.y;
           if(event.modifiers.shift & !_.isEmpty(path)) {
-            path.add(point);
+            globalPath.path.add(point);
           }
         }
       };
@@ -220,9 +221,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       tool.onMouseDrag = function(event) {
         if (drawingAllowed && !_.isEmpty(path)) {
           var point = event.point.round();
-          currMouseX = point.x;
-          currMouseY = point.y;
-          path.add(point);
+          globalPath.currMouseX = point.x;
+          globalPath.currMouseY = point.y;
+          globalPath.path.add(point);
         }
       };
 
@@ -243,7 +244,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
           var point = (event ? event.point.round() :
            {x: currMouseX, y: currMouseY});
-            path = new Path({
+            globalPath.path = new Path({
               segments: [point],
               strokeColor: strokeColor,
               strokeWidth: strokeWidth
@@ -266,7 +267,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         currStrokeNum += 1;
 
         // Simplify path to reduce data sent
-        path.simplify(simplifyParam);
+        globalPath.path.simplify(simplifyParam);
 
         // send stroke data to db.
         send_stroke_data(path);

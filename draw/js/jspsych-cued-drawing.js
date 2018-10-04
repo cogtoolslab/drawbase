@@ -188,6 +188,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
       // initialize paper.js
+      paper.install(window);
       paper.setup('sketchpad');
     };
 

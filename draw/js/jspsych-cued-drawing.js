@@ -146,12 +146,14 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       submit_button.disabled=true;
 
       // sketch rendering to base64 encoding
+      var dataURL = document.getElementById('sketchpad').toDataURL();
+      dataURL = dataURL.replace('data:image/png;base64,','');      
 
       // data saving
       var trial_data = {
         cue_label: 'PLACEHOLDER',
-        cue_URL: 'CUE_URL'      
-
+        cue_URL: 'CUE_URL',
+        pngData: dataURL      
       };
 
       // clear the HTML in the display element
@@ -247,7 +249,7 @@ function endStroke(event) {
   // Only send stroke if actual line (single points don't get rendered)
   if (drawingAllowed && path.length > 1) {
     
-    // allow submission of button
+    // allow submission of button if endStroke is called 
     guessBtn.disabled=false;
 
     // record end stroke time
@@ -264,4 +266,5 @@ function endStroke(event) {
 
     // reset path
     path = [];
+  }
 }

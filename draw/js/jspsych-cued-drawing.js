@@ -56,7 +56,10 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     }   
 
     // wait for a little bit for data to come back from db, then show_display
-    setTimeout(function() {show_cue(); }, 1500);  
+    setTimeout(function() {show_cue(); }, 1500); 
+
+    // print trial info for debugging
+    console.log('trial',trial); 
 
     // wrapper function to show cue, this is called when you've waited as long as you
     // reckon is long enough for the data to come back from the db

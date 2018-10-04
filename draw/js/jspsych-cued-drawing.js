@@ -207,7 +207,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
-          console.log(point);
+          console.log('onMouseMove',event.point.round());
           if (!_.isEmpty(path)) {
             path.add(point);
           }
@@ -219,7 +219,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       }
 
       tool.onMouseUp = function (event) {
-        console.log('onMouseDown',event.point.round());
+        console.log('onMouseUp',event.point.round());
         endStroke(event);                
       }
 

@@ -64,7 +64,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // create new sketchpad
       var html = '<canvas id="sketchpad" style="display:none"></canvas>';
-      sketchpad = new Sketchpad();
 
       // display prompt if there is one
       if (trial.prompt !== null) {
@@ -91,6 +90,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
+
+      // instantiate new sketchpad
+      sketchpad = new Sketchpad();
 
       // reset global current stroke number variable
       currStrokeNum = 0;

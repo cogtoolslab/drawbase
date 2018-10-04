@@ -34,6 +34,11 @@
 }
 
 .green {
+  position: absolute;
+  top: 14vh;  
+  right:0;left:0;
+  float: top;
+  margin: auto;  
   background: repeating-linear-gradient(
     135deg,
     #39BE8B,

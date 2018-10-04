@@ -198,7 +198,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // initialize paper.js
       paper.setup('sketchpad');
-      view.viewSize = new Size(448,448);
     }
 
     // bind events to the sketchpad canvas

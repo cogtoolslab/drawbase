@@ -203,9 +203,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       canvas.addEventListener('mouseup',onMouseUp, false);
 
       // initialize path
-      var path = [];
-      console.log('path',path);
-      console.log('canvas',canvas);
+      var path = new Path();
 
       // define 
       function onMouseMove(event) {
@@ -247,7 +245,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
             var point = (event ? event.point.round() :
              {x: currMouseX, y: currMouseY});
-              globalPath.path = new Path({
+              path = new Path({
                 segments: [point],
                 strokeColor: strokeColor,
                 strokeWidth: strokeWidth
@@ -270,7 +268,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           currStrokeNum += 1;
 
           // Simplify path to reduce data sent
-          globalPath.path.simplify(simplifyParam);
+          path.simplify(simplifyParam);
 
           // send stroke data to db.
           send_stroke_data(path);

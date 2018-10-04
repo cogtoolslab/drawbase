@@ -189,7 +189,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
 
-      var canvas = display_element.querySelector('#sketchpad');
+      var canvas = document.getElementById('sketchpad');
       canvas.height = 448; // set to 80% of the actual screen
       canvas.width = canvas.height;      
 
@@ -197,23 +197,20 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       paper.setup('sketchpad');
 
       // add event listeners to canvas object
-      canvas.addEventListener('mousemove',onMouseMove, false);
-      canvas.addEventListener('mousemove',onMouseDrag, false);
-      canvas.addEventListener('mousedown',onMouseDown, false);
-      canvas.addEventListener('mouseup',onMouseUp, false);
+      $('#sketchpad').mousedown(onMouseDown);
+      $('#sketchpad').mousemove(onMouseMove);
+      $('#sketchpad').mouseup(onMouseUp);
 
       // initialize path
       var path = [];
 
-      // define 
+      // define mouse interaction events
       function onMouseMove(event) {
         if(drawingAllowed) {
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
-          if(event.modifiers.shift & !_.isEmpty(path)) {
-            path.add(point);
-          }
+          path.add(point);
         }
       }
 
@@ -221,19 +218,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         startStroke(event);
       }
 
-      function onMouseDrag(event) {
-        if (drawingAllowed && !_.isEmpty(path)) {
-          var point = event.point.round();
-          currMouseX = point.x;
-          currMouseY = point.y;
-          path.add(point);
-        }        
-      }
-
       function onMouseUp(event) {
         endStroke(event);        
       }
 
+      // startStroke
       function startStroke(event) {
           console.log('startStroke fn fired');
           if (drawingAllowed) {
@@ -253,6 +242,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           }
         };
 
+      // endStroke
       function endStroke(event) {
         console.log('endStroke fn fired');
         // Only send stroke if actual line (single points don't get rendered)

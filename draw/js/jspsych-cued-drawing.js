@@ -184,7 +184,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     var strokeWidth = 5;
     var simplifyParam = 10;
     var currStrokeNum = 0;
-    var globalPath;
 
     ///////// CORE DRAWING FUNCTIONS ///////////
 
@@ -196,91 +195,90 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // initialize paper.js
       paper.setup('sketchpad');
-    }
 
-    // bind events to the sketchpad canvas
-    Sketchpad.prototype.setupTool = function() {
-      globalPath.path = [];
-      var tool = new Tool();
+      // add event listeners to canvas object
+      canvas.addEventListener('mousemove',onMouseMove, false);
+      canvas.addEventListener('mousemove',onMouseDrag, false);
+      canvas.addEventListener('mousedown',onMouseDown, false);
+      canvas.addEventListener('mouseup',onMouseUp, false);
 
-      tool.onMouseMove = function(event) {
+      // initialize path
+      var path = [];
+
+      // define 
+      function onMouseMove(event) {
         if(drawingAllowed) {
-          console.log('globalPath',globalPath);
           var point = event.point.round();
-          globalPath.currMouseX = point.x;
-          globalPath.currMouseY = point.y;
+          currMouseX = point.x;
+          currMouseY = point.y;
           if(event.modifiers.shift & !_.isEmpty(path)) {
-            globalPath.path.add(point);
+            path.add(point);
           }
         }
-      };
-
-      tool.onMouseDown = function(event) {
-        startStroke(event);
-      };
-
-      tool.onMouseDrag = function(event) {
-        if (drawingAllowed && !_.isEmpty(path)) {
-          console.log('globalPath',globalPath);
-          var point = event.point.round();
-          globalPath.currMouseX = point.x;
-          globalPath.currMouseY = point.y;
-          globalPath.path.add(point);
-        }
-      };
-
-      tool.onMouseUp = function(event) {
-        endStroke(event);
-      };
-
-    };
-
-    function startStroke(event) {
-        console.log('startStroke fn fired');
-        if (drawingAllowed) {
-          startStrokeTime = Date.now();
-          // If a path is ongoing, send it along before starting this new one
-          if(!_.isEmpty(path)) {
-            endStroke(event);
-          }
-
-          var point = (event ? event.point.round() :
-           {x: currMouseX, y: currMouseY});
-            globalPath.path = new Path({
-              segments: [point],
-              strokeColor: strokeColor,
-              strokeWidth: strokeWidth
-            });
-        }
-      };
-
-    function endStroke(event) {
-      console.log('endStroke fn fired');
-      // Only send stroke if actual line (single points don't get rendered)
-      if (drawingAllowed && path.length > 1) {
-        
-        // allow submission of button if endStroke is called 
-        guessBtn.disabled=false;
-
-        // record end stroke time
-        endStrokeTime = Date.now();
-        
-        // Increment stroke num
-        currStrokeNum += 1;
-
-        // Simplify path to reduce data sent
-        globalPath.path.simplify(simplifyParam);
-
-        // send stroke data to db.
-        send_stroke_data(path);
-
-        // reset path
-        path = [];
       }
+
+      function onMouseDown(event) {
+        startStroke(event);
+      }
+
+      function onMouseDrag(event) {
+        if (drawingAllowed && !_.isEmpty(path)) {
+          var point = event.point.round();
+          currMouseX = point.x;
+          currMouseY = point.y;
+          path.add(point);
+        }        
+      }
+
+      function onMouseUp(event) {
+        endStroke(event);        
+      }
+
+      function startStroke(event) {
+          console.log('startStroke fn fired');
+          if (drawingAllowed) {
+            startStrokeTime = Date.now();
+            // If a path is ongoing, send it along before starting this new one
+            if(!_.isEmpty(path)) {
+              endStroke(event);
+            }
+
+            var point = (event ? event.point.round() :
+             {x: currMouseX, y: currMouseY});
+              globalPath.path = new Path({
+                segments: [point],
+                strokeColor: strokeColor,
+                strokeWidth: strokeWidth
+              });
+          }
+        };
+
+      function endStroke(event) {
+        console.log('endStroke fn fired');
+        // Only send stroke if actual line (single points don't get rendered)
+        if (drawingAllowed && path.length > 1) {
+          
+          // allow submission of button if endStroke is called 
+          guessBtn.disabled=false;
+
+          // record end stroke time
+          endStrokeTime = Date.now();
+          
+          // Increment stroke num
+          currStrokeNum += 1;
+
+          // Simplify path to reduce data sent
+          globalPath.path.simplify(simplifyParam);
+
+          // send stroke data to db.
+          send_stroke_data(path);
+
+          // reset path
+          path = [];
+        }
+      }
+    
     }
-
-
-
 
   };
 

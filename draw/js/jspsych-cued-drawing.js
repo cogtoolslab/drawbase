@@ -190,6 +190,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // initialize paper.js
       paper.install(window);
       paper.setup('sketchpad');
+      paper.view.viewSize.width = 448;
+      paper.view.viewSize.height = 448;
     };
 
     Sketchpad.prototype.setupTool = function() {    

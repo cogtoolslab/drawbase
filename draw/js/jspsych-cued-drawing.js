@@ -63,11 +63,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     function show_cue() {    
 
       // create new sketchpad
-      sketchpad = new Sketchpad(); 
+      var html = '<canvas id="sketchpad" style="display:none"></canvas>';
+      sketchpad = new Sketchpad();
 
       // display prompt if there is one
       if (trial.prompt !== null) {
-        var html = '<div id="prompt">' + trial.prompt + '</div>';
+        html += '<div id="prompt">' + trial.prompt + '</div>';
       }         
 
       // display label
@@ -180,7 +181,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     ///////// CORE DRAWING FUNCTIONS ///////////
 
     function Sketchpad() {
-
 
       var canvas = display_element.querySelector('#sketchpad'),
           ctx=canvas.getContext("2d");

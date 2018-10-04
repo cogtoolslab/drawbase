@@ -187,38 +187,28 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     ///////// CORE DRAWING FUNCTIONS ///////////
 
     function Sketchpad() {
-
-      // var canvas = document.getElementById('sketchpad');
-      // canvas.height = 448; // set to 80% of the actual screen
-      // canvas.width = canvas.height;      
-
+      
       // initialize paper.js
       paper.setup('sketchpad');
 
-      // // add event listeners to canvas object
-      // $('#sketchpad').mousedown(onMouseDown);
-      // $('#sketchpad').mousemove(onMouseMove);
-      // $('#sketchpad').mouseup(onMouseUp);
-
-      // initialize path
-      var path = new Path();
+      // initialize path and tool
+      var path;
+      var tool = new Tool();      
 
       // define mouse interaction events
-      function onMouseMove(event) {
-        if(drawingAllowed) {
+      tool.onMouseMove = function(event) { 
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
           path.add(point);
-        }
       }
 
-      function onMouseDown(event) {
-        startStroke(event);
+      tool.onMouseDown = function(event) {
+        startStroke(event);        
       }
 
-      function onMouseUp(event) {
-        endStroke(event);        
+      tool.onMouseUp = function (event) {
+        endStroke(event);                
       }
 
       // startStroke

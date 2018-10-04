@@ -81,8 +81,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         // place cue image inside the cue image container (which has fixed location)
         html += '<div id="cue-container">';
           // embed images inside the response button divs
-          var str = trial.cue_html.replace('imageURL', trial.cue_image_url);
-          html += trial.cue_html;        
+          var cue_html_replaced = trial.cue_html.replace('imageURL', trial.cue_image_url);
+          html += cue_html_replaced;        
         html += '</div>'; 
       // }
 

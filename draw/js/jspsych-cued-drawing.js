@@ -200,11 +200,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     // bind events to the sketchpad canvas
     Sketchpad.prototype.setupTool = function() {
-      path = [];
+      globalPath.path = [];
       var tool = new Tool();
 
       tool.onMouseMove = function(event) {
         if(drawingAllowed) {
+          console.log('globalPath',globalPath);
           var point = event.point.round();
           globalPath.currMouseX = point.x;
           globalPath.currMouseY = point.y;
@@ -220,6 +221,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       tool.onMouseDrag = function(event) {
         if (drawingAllowed && !_.isEmpty(path)) {
+          console.log('globalPath',globalPath);
           var point = event.point.round();
           globalPath.currMouseX = point.x;
           globalPath.currMouseY = point.y;

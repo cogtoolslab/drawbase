@@ -91,9 +91,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
 
-      // instantiate new sketchpad
-      sketchpad = new Sketchpad();
-
       // reset global current stroke number variable
       currStrokeNum = 0;
 
@@ -104,6 +101,10 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     }  
 
     function show_canvas() {  
+
+      // instantiate new sketchpad
+      sketchpad = new Sketchpad();
+
       // remove the cue
       jsPsych.pluginAPI.setTimeout(function() {
         display_element.querySelector('#cue_html').style.visibility = 'hidden';
@@ -184,7 +185,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
 
-      console.log(display_element.querySelector('#sketchpad'));
       var canvas = display_element.querySelector('#sketchpad');
       canvas.height = 448; // set to 80% of the actual screen
       canvas.width = canvas.height;

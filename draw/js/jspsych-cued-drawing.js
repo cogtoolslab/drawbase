@@ -146,7 +146,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       submit_button.disabled=true;
 
       // sketch rendering to base64 encoding
-      var dataURL = document.getElementById('sketchpad').toDataURL();
+      var dataURL = display_element.querySelector('#sketchpad').toDataURL();
       dataURL = dataURL.replace('data:image/png;base64,','');      
 
       // data saving
@@ -183,7 +183,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
   ///////// CORE DRAWING FUNCTIONS ///////////
 
   function Sketchpad() {
-    var canvas = document.getElementById("sketchpad"),
+    var canvas = display_element.querySelector('#sketchpad'),
         ctx=canvas.getContext("2d");
     canvas.height = 448; // set to 80% of the actual screen
     canvas.width = canvas.height;

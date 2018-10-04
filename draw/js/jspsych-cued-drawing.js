@@ -202,6 +202,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var path;
       var tool = new Tool();
 
+      tool.onMouseDown = function(event) {        
+        console.log('onMouseDown',event.point.round());
+        startStroke(event);        
+      }
+
       // define mouse interaction events
       tool.onMouseMove = function(event) {         
           var point = event.point.round();
@@ -211,11 +216,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           if (!_.isEmpty(path)) {
             path.add(point);
           }
-      }
-
-      tool.onMouseDown = function(event) {        
-        console.log('onMouseDown',event.point.round());
-        startStroke(event);        
       }
 
       tool.onMouseUp = function (event) {

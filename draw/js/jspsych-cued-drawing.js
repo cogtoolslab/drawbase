@@ -209,7 +209,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
-          if (!_.isEmpty(globalGame.path)) {
+          if (!_.isEmpty(path)) {
             path.add(point);
           }
       }

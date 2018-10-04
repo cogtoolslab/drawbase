@@ -183,6 +183,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
   ///////// CORE DRAWING FUNCTIONS ///////////
 
   function Sketchpad() {
+    var canvas = document.getElementById("sketchpad"),
+        ctx=canvas.getContext("2d");
+    canvas.height = 448; // set to 80% of the actual screen
+    canvas.width = canvas.height;
+
     // initialize paper.js
     paper.setup('sketchpad');
     view.viewSize = new Size(448,448);
@@ -264,7 +269,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       path = [];
     }
   }
-  
+
 
   return plugin;
 })();

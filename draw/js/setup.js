@@ -82,9 +82,9 @@ function setupGame () {
       oldCallback = newCallback;
       var newCallback = function(d) {
         console.log('data retrieved from db: ',d);
-      	trial.category = d.category;
+      	trial.cue_label = d.category;        
         trial.image_id = d.image_id;
-        trial.image_url = d.image_url;
+        trial.cue_image_url = d.image_url;
         trial.condition = d.condition;
         trial._id = d._id;
         trial.shuffle_ind = d.shuffler_ind;

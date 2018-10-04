@@ -112,15 +112,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // instantiate new sketchpad
       sketchpad = new Sketchpad();
 
-      // remove the cue
+      // remove the cue and show the canvas
       jsPsych.pluginAPI.setTimeout(function() {
         display_element.querySelector('#cue_html').style.visibility = 'hidden';
+        display_element.querySelector('#sketchpad').style.visibility = 'visible';
       }, 0);
 
-      // show the canvas 
-      jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#sketchpad').style.visibility = 'visible';
-      }, 100);
     }
 
     // actually send stroke data back to server to save to db
@@ -236,6 +233,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     };
 
     function startStroke(event) {
+        console.log('startStroke fn fired');
         if (drawingAllowed) {
           startStrokeTime = Date.now();
           // If a path is ongoing, send it along before starting this new one
@@ -254,6 +252,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       };
 
     function endStroke(event) {
+      console.log('endStroke fn fired');
       // Only send stroke if actual line (single points don't get rendered)
       if (drawingAllowed && path.length > 1) {
         

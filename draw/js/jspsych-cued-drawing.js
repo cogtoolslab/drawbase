@@ -182,8 +182,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
 
-      var canvas = display_element.querySelector('#sketchpad'),
-          ctx=canvas.getContext("2d");
+      console.log(display_element.querySelector('#sketchpad'));
+      var canvas = display_element.querySelector('#sketchpad');
       canvas.height = 448; // set to 80% of the actual screen
       canvas.width = canvas.height;
 

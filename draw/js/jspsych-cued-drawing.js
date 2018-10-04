@@ -114,8 +114,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // remove the cue and show the canvas
       jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#cue_html').style.visibility = 'hidden';
-        display_element.querySelector('#sketchpad').style.visibility = 'visible';
+        $('#cue_html').fadeOut('slow');
+        $('#sketchpad').fadeIn('slow');
       }, 0);
 
     }

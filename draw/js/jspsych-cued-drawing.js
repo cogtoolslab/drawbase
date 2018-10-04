@@ -193,12 +193,16 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       paper.setup('sketchpad');
       paper.view.viewSize.width = 448;
       paper.view.viewSize.height = 448;
+
+      console.log('Sketchpad called');
     };
 
     Sketchpad.prototype.setupTool = function() {    
       // initialize path and tool
       var path;
       var tool = new Tool();
+
+      console.log('sketchpad.setupTool called');
 
       // define mouse interaction events
       tool.onMouseMove = function(event) { 

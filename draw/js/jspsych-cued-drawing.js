@@ -53,17 +53,17 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     // print errors if the parameters are not correctly formatted 
     if(typeof trial.cue_label === 'undefined'){
       console.error('Required parameter "cue_label" missing in jspsych-cued-drawing');
-    }
-
-    // create new sketchpad
-    sketchpad = new Sketchpad();    
+    }   
 
     // wait for a little bit for data to come back from db, then show_display
     setTimeout(function() {show_cue(); }, 1500);  
 
     // wrapper function to show cue, this is called when you've waited as long as you
     // reckon is long enough for the data to come back from the db
-    function show_cue() {       
+    function show_cue() {    
+
+      // create new sketchpad
+      sketchpad = new Sketchpad(); 
 
       // display prompt if there is one
       if (trial.prompt !== null) {
@@ -180,6 +180,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     ///////// CORE DRAWING FUNCTIONS ///////////
 
     function Sketchpad() {
+
+
       var canvas = display_element.querySelector('#sketchpad'),
           ctx=canvas.getContext("2d");
       canvas.height = 448; // set to 80% of the actual screen

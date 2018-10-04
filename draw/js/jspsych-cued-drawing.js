@@ -187,13 +187,14 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     ///////// CORE DRAWING FUNCTIONS ///////////
 
     function Sketchpad() {
-      
       // initialize paper.js
       paper.setup('sketchpad');
+    };
 
+    Sketchpad.prototype.setupTool = function() {    
       // initialize path and tool
       var path;
-      var tool = new Tool();      
+      var tool = new Tool();
 
       // define mouse interaction events
       tool.onMouseMove = function(event) { 

@@ -90,7 +90,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       html += '<button id="submit_button" class="green" >submit</button>'
 
 
-
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
 
@@ -189,20 +188,20 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
 
-      var canvas = document.getElementById('sketchpad');
-      canvas.height = 448; // set to 80% of the actual screen
-      canvas.width = canvas.height;      
+      // var canvas = document.getElementById('sketchpad');
+      // canvas.height = 448; // set to 80% of the actual screen
+      // canvas.width = canvas.height;      
 
       // initialize paper.js
       paper.setup('sketchpad');
 
-      // add event listeners to canvas object
-      $('#sketchpad').mousedown(onMouseDown);
-      $('#sketchpad').mousemove(onMouseMove);
-      $('#sketchpad').mouseup(onMouseUp);
+      // // add event listeners to canvas object
+      // $('#sketchpad').mousedown(onMouseDown);
+      // $('#sketchpad').mousemove(onMouseMove);
+      // $('#sketchpad').mouseup(onMouseUp);
 
       // initialize path
-      var path = [];
+      var path = new Path();
 
       // define mouse interaction events
       function onMouseMove(event) {

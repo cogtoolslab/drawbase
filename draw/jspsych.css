@@ -33,12 +33,7 @@
     border: solid 1px #999;
 }
 
-.green {
-  position: absolute;
-  top: 14vh;  
-  right:0;left:0;
-  float: top;
-  margin: auto;  
+.green { 
   background: repeating-linear-gradient(
     135deg,
     #39BE8B,
@@ -48,6 +43,11 @@
   );
   -webkit-box-shadow: 4px 4px 0 #39BE8B;
   box-shadow: 4px 4px 0 #39BE8B;
+  position: absolute;
+  top: 14vh;  
+  right:0;
+  left:0;
+  margin: auto; 
 }
 
  /* Container holding jsPsych content */

@@ -82,12 +82,15 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         html += '<div id="cue-container">';
           // embed images inside the response button divs
           var str = trial.cue_html.replace(/%imageURL%/g, trial.cue_URL);
+          console.log(str);
           html += trial.cue_html;        
         html += '</div>'; 
       // }
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" >submit</button>'
+
+
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;

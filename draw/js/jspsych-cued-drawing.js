@@ -191,7 +191,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       var canvas = display_element.querySelector('#sketchpad');
       canvas.height = 448; // set to 80% of the actual screen
-      canvas.width = canvas.height;
+      canvas.width = canvas.height;      
 
       // initialize paper.js
       paper.setup('sketchpad');
@@ -204,6 +204,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // initialize path
       var path = [];
+      console.log('path',path);
+      console.log('canvas',canvas);
 
       // define 
       function onMouseMove(event) {

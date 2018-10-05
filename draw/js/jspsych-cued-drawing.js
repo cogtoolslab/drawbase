@@ -50,6 +50,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   plugin.trial = function(display_element, trial) {    
 
+    // init globals
+    var startTrialTime, startResponseTime, startStrokeTime, endStrokeTime, endTrialTime;
+
     // print errors if the parameters are not correctly formatted 
     if(typeof trial.cue_label === 'undefined'){
       console.error('Required parameter "cue_label" missing in jspsych-cued-drawing');
@@ -97,7 +100,10 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       display_element.innerHTML = html;
 
       // reset global current stroke number variable
-      currStrokeNum = 0;      
+      currStrokeNum = 0;  
+
+      // record trial start timestamp
+      startTrialTime = Date.now();
 
       // wait for the cue duration, then trigger display of the drawing canvas
       // setTimeout(function() {show_canvas(); }, trial.cue_duration);  
@@ -111,17 +117,15 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       submit_button.addEventListener('click', end_trial);
       submit_button.disabled = true; // button is disabled until at least one stroke      
 
+      // record timestamp for start of response window
+      startResponseTime = Date.now(); 
+
       // instantiate new sketchpad
       sketchpad = new Sketchpad();
       sketchpad.setupTool();
 
-      // remove the cue and show the canvas
-      setTimeout(function() {
-        // $('#cue_container').fadeOut('slow');
-        // $('#cue_html').fadeOut('slow');
-        // $('#sketchpad_container').fadeIn('slow');
-        $('#sketchpad').fadeIn('slow');
-      }, 100);
+      // show the canvas
+      $('#sketchpad').fadeIn('fast');
 
     }
 
@@ -141,9 +145,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
           svg: svgString,
           category: trial.cue_label,
           trialNum: trial.trialNum,
-          // startTrialTime: startTrialTime,
-          // startStrokeTime: startStrokeTime,
-          // endStrokeTime: endStrokeTime,
+          startResponseTime: startResponseTime,
+          startStrokeTime: startStrokeTime,
+          endStrokeTime: endStrokeTime,
           time: Date.now()
       };
 
@@ -166,9 +170,16 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // data saving
       var trial_data = {
-        cue_label: 'PLACEHOLDER',
-        cue_URL: 'CUE_URL',
-        pngData: dataURL      
+          dbname:'drawbase',
+          colname: 'photodraw2', 
+          iterationName: 'development',
+          eventType: 'click',
+          category: trial.cue_label,
+          trialNum: trial.trialNum,        
+          cue_url: trial.cue_url,
+          pngData: dataURL,
+          startTrialTime: startTrialTime,        
+          endTrialTime: Date.now()      
       };
 
       // clear the HTML in the display element

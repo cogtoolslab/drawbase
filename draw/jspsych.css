@@ -8,12 +8,12 @@
 
  /* Custom CSS */
 
-#sketchpad-container {
+#sketchpad_container {
     height: 448px;
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:600px;
+    right:100px;left:auto;
     float: top;
     margin: auto;
     background: #ffffff;

@@ -68,7 +68,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var html = '';
 
       // create sketchpad 
-      html += '<div id="sketchpad-container" style="display:none">';
+      html += '<div id="sketchpad_container" style="display:none">';
       html += '<canvas id="sketchpad" style="display:none"></canvas>';
       html += '</div>'; 
 
@@ -83,7 +83,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // display image if the condition is 'photo'
       // if (trial.condition == 'photo') {
         // place cue image inside the cue image container (which has fixed location)
-        html += '<div id="cue-container">';
+        html += '<div id="cue_container">';
           // embed images inside the response button divs
           var cue_html_replaced = trial.cue_html.replace('imageURL', trial.cue_image_url);
           html += cue_html_replaced;        
@@ -116,7 +116,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       sketchpad.setupTool();
 
       // remove the cue and show the canvas
-      jsPsych.pluginAPI.setTimeout(function() {
+      setTimeout(function() {
         $('#cue_container').fadeOut('slow');
         $('#cue_html').fadeOut('slow');
         $('#sketchpad_container').fadeIn('slow');

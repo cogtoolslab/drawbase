@@ -69,7 +69,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // create sketchpad 
       html += '<div id="sketchpad-container" style="display:none>';
-      html += '<div><canvas id="sketchpad" style="display:none"></canvas></div>';
+      html += '<canvas id="sketchpad" style="display:none"></canvas>';
       html += '</div>'; 
 
       // display prompt if there is one

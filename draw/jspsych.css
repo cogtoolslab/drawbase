@@ -13,7 +13,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:600;
+    right:auto;left:600px;
     float: top;
     margin: auto;
     background: #ffffff;
@@ -33,25 +33,16 @@
     border: solid 1px #999;
 }
 
-#cue-container {
+#cue_container {
     height: 448px;
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:100;
+    right:auto;left:100px;
     float: top;
     margin: auto;
     background: #ffffff;
     border: solid 1px #999;
-}
-
-#submit_button {
-  width: 60px;
-  position: absolute;
-  top: 700px;  
-  right:0;
-  left:0;
-  margin: auto; 
 }
 
 #cue_label {
@@ -61,6 +52,15 @@
   right:0;
   left:0;
   margin: auto;   
+}
+
+#submit_button {
+  width: 60px;
+  position: absolute;
+  top: 700px;  
+  right:0;
+  left:0;
+  margin: auto; 
 }
 
 .green { 

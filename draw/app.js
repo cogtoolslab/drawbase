@@ -118,6 +118,7 @@ function sendSingleStim(socket, data) {
 }
 
 var writeDataToMongo = function(data) {
+  console.log(data);
   sendPostRequest(
     'http://localhost:6000/db/insert',
     { json: data },

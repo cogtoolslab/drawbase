@@ -148,7 +148,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       };
 
       // send stroke data to server
-      console.log(stroke_data);
+      console.log('stroke_data',stroke_data);
       socket.emit('stroke',stroke_data);
 
     }

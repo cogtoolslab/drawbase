@@ -57,6 +57,12 @@ io.on('connection', function (socket) {
     writeDataToMongo(data);
   });
 
+  socket.on('stroke', function(data) {
+    console.log('stroke data received: ' + JSON.stringify(data));
+    // Increment games list in mongo here
+    writeDataToMongo(data);
+  });  
+
   socket.on('getStim', function(data) {
     sendSingleStim(socket, data);
   });

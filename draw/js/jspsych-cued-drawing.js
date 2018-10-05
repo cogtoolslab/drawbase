@@ -127,10 +127,12 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     // actually send stroke data back to server to save to db
     function send_stroke_data(path) {
-      path.selected = false;
+      // path.selected = false;
       var svgString = path.exportSVG({asString: true});
+      console.log('path',path);
+      console.log('svgString',svgString);
+      
       // specify other metadata
-
       stroke_data = {
           dbname:'drawbase',
           colname: 'photodraw2', 

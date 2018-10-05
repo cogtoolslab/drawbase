@@ -264,7 +264,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         if (drawingAllowed && path.length > 1) {
           
           // allow submission of button if endStroke is called 
-          guessBtn.disabled=false;
+          submit_button.disabled=false;
 
           // record end stroke time
           endStrokeTime = Date.now();

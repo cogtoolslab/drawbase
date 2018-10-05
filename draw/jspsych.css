@@ -17,20 +17,16 @@
     float: top;
     margin: auto;
     background: #ffffff;
-    border: solid 1px #999;
+    border: solid 2px #999;
 
 }
 
 #sketchpad {
     height: 448px;
     width: 448px;
-/*    position: absolute;
-    top: 200px;
-    right:0;left:600px;*/
     float: top;
     margin: auto;
-    background: #ffffff;
-    border: solid 1px #999;
+    background: #ffffff;    
 }
 
 #cue_container {
@@ -42,10 +38,11 @@
     float: top;
     margin: auto;
     background: #ffffff;
-    border: solid 1px #999;
+    border: solid 2px #999;
 }
 
 #cue_label {
+  font-size:36px;
   width: 60px;
   position: absolute;
   top: 100px;  

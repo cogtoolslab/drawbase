@@ -13,7 +13,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:0;left:0;
+    right:auto;left:600;
     float: top;
     margin: auto;
     background: #ffffff;
@@ -24,9 +24,9 @@
 #sketchpad {
     height: 448px;
     width: 448px;
-    position: absolute;
+/*    position: absolute;
     top: 200px;
-    right:0;left:0;
+    right:0;left:600;*/
     float: top;
     margin: auto;
     background: #ffffff;
@@ -38,7 +38,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:0;left:0;
+    right:auto;left:100;
     float: top;
     margin: auto;
     background: #ffffff;

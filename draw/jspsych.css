@@ -18,7 +18,7 @@
     margin: auto;
     background: #ffffff;
     border: solid 1px #999;
-   z-index:1;
+   /*z-index:1;*/
 
 }
 
@@ -95,7 +95,7 @@
    margin: auto;
    flex: 1 1 100%;
    width: 100%;
-   z-index:0;
+   /*z-index:0;*/
  }
 
  .jspsych-content {

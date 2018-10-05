@@ -1,6 +1,8 @@
 var oldCallback;
 var score = 0;
 
+paper.install('window');
+
 function sendData() {
   console.log('sending data to mturk');
   jsPsych.turk.submitToTurk({'score':score});

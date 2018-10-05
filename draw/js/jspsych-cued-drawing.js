@@ -6,8 +6,6 @@
  *
  **/ 
 
-paper.install('window');
-
 jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   var plugin = {};

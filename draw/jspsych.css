@@ -33,7 +33,7 @@
     border: solid 1px #999;
 }
 
-#cue-container {
+#cue_container {
     height: 448px;
     width: 448px;
     position: absolute;
@@ -45,15 +45,6 @@
     border: solid 1px #999;
 }
 
-#submit_button {
-  width: 60px;
-  position: absolute;
-  top: 700px;  
-  right:0;
-  left:0;
-  margin: auto; 
-}
-
 #cue_label {
   width: 60px;
   position: absolute;
@@ -61,6 +52,15 @@
   right:0;
   left:0;
   margin: auto;   
+}
+
+#submit_button {
+  width: 60px;
+  position: absolute;
+  top: 700px;  
+  right:0;
+  left:0;
+  margin: auto; 
 }
 
 .green { 

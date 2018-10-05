@@ -6,6 +6,8 @@
  *
  **/ 
 
+paper.install('window');
+
 jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
   var plugin = {};
@@ -193,7 +195,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     ///////// CORE DRAWING FUNCTIONS ///////////
 
     function Sketchpad() {
-      // initialize paper.js
+      // initialize paper.js      
       paper.setup('sketchpad');
       paper.view.viewSize.width = 448;
       paper.view.viewSize.height = 448;

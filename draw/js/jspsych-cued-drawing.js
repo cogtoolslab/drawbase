@@ -68,7 +68,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var html = '';
 
       // create sketchpad 
-      html += '<div id="sketchpad_container" style="display:none">';
+      html += '<div id="sketchpad_container">';
       html += '<canvas id="sketchpad" style="display:none"></canvas>';
       html += '</div>'; 
 
@@ -117,9 +117,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // remove the cue and show the canvas
       setTimeout(function() {
-        $('#cue_container').fadeOut('slow');
-        $('#cue_html').fadeOut('slow');
-        $('#sketchpad_container').fadeIn('slow');
+        // $('#cue_container').fadeOut('slow');
+        // $('#cue_html').fadeOut('slow');
+        // $('#sketchpad_container').fadeIn('slow');
         $('#sketchpad').fadeIn('slow');
       }, 100);
 

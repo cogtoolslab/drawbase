@@ -213,15 +213,24 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
         startStroke(event);        
       }
 
-      tool.onMouseMove = function(event) {         
+      // tool.onMouseMove = function(event) {         
+      //     var point = event.point.round();
+      //     currMouseX = point.x;
+      //     currMouseY = point.y;
+      //     console.log('onMouseMove',event.point.round());
+      //     if (!_.isEmpty(path)) {
+      //       path.add(point);
+      //     }
+      // }
+
+      tool.onMouseDrag = function(event) {
+        if (drawingAllowed && !_.isEmpty(path)) {
           var point = event.point.round();
           currMouseX = point.x;
           currMouseY = point.y;
-          console.log('onMouseMove',event.point.round());
-          if (!_.isEmpty(path)) {
-            path.add(point);
-          }
-      }
+          path.add(point);
+        }
+      };      
 
       tool.onMouseUp = function (event) {
         console.log('onMouseUp',event.point.round());

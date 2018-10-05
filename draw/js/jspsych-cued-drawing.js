@@ -68,7 +68,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var html = '';
 
       // create sketchpad 
-      html += '<div id="sketchpad-container" style="display:none>';
+      html += '<div id="sketchpad-container" style="display:none">';
       html += '<canvas id="sketchpad" style="display:none"></canvas>';
       html += '</div>'; 
 

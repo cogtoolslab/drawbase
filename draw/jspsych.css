@@ -13,7 +13,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:100px;left:auto;
+    right:200px;left:auto;
     float: top;
     margin: auto;
     background: #ffffff;
@@ -34,7 +34,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:100px;
+    right:auto;left:200px;
     float: top;
     margin: auto;
     background: #ffffff;
@@ -52,7 +52,8 @@
 }
 
 #submit_button {
-  width: 60px;
+  font-size: 24px;
+  width: 80px;
   position: absolute;
   top: 700px;  
   right:0;

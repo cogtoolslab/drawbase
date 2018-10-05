@@ -91,7 +91,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // }
 
       // display button to submit drawing when finished
-      html += '<button id="submit_button" class="green" >submit</button>'
+      html += '<button id="submit_button" class="green" > submit </button>'
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;

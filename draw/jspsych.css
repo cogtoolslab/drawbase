@@ -13,7 +13,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:600;
+    right:auto;left:600px;
     float: top;
     margin: auto;
     background: #ffffff;
@@ -26,7 +26,7 @@
     width: 448px;
 /*    position: absolute;
     top: 200px;
-    right:0;left:600;*/
+    right:0;left:600px;*/
     float: top;
     margin: auto;
     background: #ffffff;
@@ -38,7 +38,7 @@
     width: 448px;
     position: absolute;
     top: 200px;
-    right:auto;left:100;
+    right:auto;left:100px;
     float: top;
     margin: auto;
     background: #ffffff;

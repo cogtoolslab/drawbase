@@ -65,12 +65,16 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
     // reckon is long enough for the data to come back from the db
     function show_cue() {    
 
-      // create new sketchpad
-      var html = '<canvas id="sketchpad" style="display:none"></canvas>';
+      var html = '';
+
+      // create sketchpad 
+      html += '<div id="sketchpad-container" style="display:none>';
+      html += '<div><canvas id="sketchpad" style="display:none"></canvas></div>';
+      html += '</div>'; 
 
       // display prompt if there is one
       if (trial.prompt !== null) {
-        html += '<div id="prompt">' + trial.prompt + '</div>';
+        var html = '<div id="prompt">' + trial.prompt + '</div>';
       }         
 
       // display label
@@ -88,7 +92,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" >submit</button>'
-
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
@@ -114,9 +117,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // remove the cue and show the canvas
       jsPsych.pluginAPI.setTimeout(function() {
+        $('#cue_container').fadeOut('slow');
         $('#cue_html').fadeOut('slow');
+        $('#sketchpad_container').fadeIn('slow');
         $('#sketchpad').fadeIn('slow');
-      }, 0);
+      }, 100);
 
     }
 
@@ -189,11 +194,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
     function Sketchpad() {
       // initialize paper.js
-      paper.install(window);
       paper.setup('sketchpad');
       paper.view.viewSize.width = 448;
       paper.view.viewSize.height = 448;
-
       console.log('Sketchpad called');
     };
 
@@ -202,21 +205,23 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var path;
       var tool = new Tool();
 
+      console.log('setupTool called');
+
       // define mouse interaction events
       tool.onMouseDown = function(event) {        
         console.log('onMouseDown',event.point.round());
         startStroke(event);        
       }
 
-      // tool.onMouseMove = function(event) {         
-      //     var point = event.point.round();
-      //     currMouseX = point.x;
-      //     currMouseY = point.y;
-      //     console.log('onMouseMove',event.point.round());
-      //     if (!_.isEmpty(path)) {
-      //       path.add(point);
-      //     }
-      // }
+      tool.onMouseMove = function(event) {         
+          var point = event.point.round();
+          currMouseX = point.x;
+          currMouseY = point.y;
+          console.log('onMouseMove',event.point.round());
+          if (!_.isEmpty(path)) {
+            path.add(point);
+          }
+      }
 
       tool.onMouseUp = function (event) {
         console.log('onMouseUp',event.point.round());

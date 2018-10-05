@@ -8,6 +8,19 @@
 
  /* Custom CSS */
 
+#sketchpad-container {
+    height: 448px;
+    width: 448px;
+    position: absolute;
+    top: 200px;
+    right:0;left:0;
+    float: top;
+    margin: auto;
+    background: #ffffff;
+    border: solid 1px #999;
+   z-index:1;
+
+}
 
 #sketchpad {
     height: 448px;
@@ -19,7 +32,6 @@
     margin: auto;
     background: #ffffff;
     border: solid 1px #999;
-    pointer-events:none;
 }
 
 #cue-container {
@@ -83,6 +95,7 @@
    margin: auto;
    flex: 1 1 100%;
    width: 100%;
+   z-index:0;
  }
 
  .jspsych-content {

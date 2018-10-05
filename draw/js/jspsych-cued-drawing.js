@@ -97,7 +97,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       display_element.innerHTML = html;
 
       // reset global current stroke number variable
-      currStrokeNum = 0;
+      currStrokeNum = 0;      
 
       // wait for the cue duration, then trigger display of the drawing canvas
       // setTimeout(function() {show_canvas(); }, trial.cue_duration);  

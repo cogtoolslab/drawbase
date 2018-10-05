@@ -41,6 +41,7 @@
     margin: auto;
     background: #ffffff;
     border: solid 2px #999;
+    pointer-events: none;
 }
 
 #cue_label {
@@ -52,10 +53,11 @@
   right:0;
   left:0;
   margin: auto;   
+  pointer-events: none;
 }
 
 #submit_button {
-  font-size: 24px;
+  font-size: 24px;  
   font-family: 'Roboto', 'Open Sans', sans-serif;  
   width: 140px;
   position: absolute;

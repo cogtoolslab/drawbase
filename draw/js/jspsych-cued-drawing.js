@@ -83,17 +83,16 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // display label
       html += '<div><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
 
+      // place cue image inside the cue image container (which has fixed location)
+      html += '<div id="cue_container">';
+
       // display image if the condition is 'photo'
       if (trial.condition == 'photo') {
-        // place cue image inside the cue image container (which has fixed location)
-        html += '<div id="cue_container">';
           // embed images inside the response button divs
           var cue_html_replaced = trial.cue_html.replace('imageURL', trial.cue_image_url);
           html += cue_html_replaced;        
-        html += '</div>'; 
-      } else {
-
-      }
+      } 
+      html += '</div>'; 
 
       // display button to submit drawing when finished
       html += '<button id="submit_button" class="green" > submit </button>'

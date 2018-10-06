@@ -44,15 +44,19 @@
     pointer-events: none;
 }
 
-#cue_label {
-  font-size:40px;
-  font-family: 'Roboto', 'Open Sans', sans-serif;
+#label_container {
   width: 200px;
   position: absolute; 
   top: 180px; right:0; left:424px;
   margin: 0;   
+  pointer-events: none;  
+  z-index:3;  
+}
+
+#cue_label {
+  font-size:40px;
+  font-family: 'Roboto', 'Open Sans', sans-serif;  
   pointer-events: none;
-  z-index:3;
 }
 
 #submit_button {

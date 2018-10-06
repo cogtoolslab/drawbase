@@ -81,7 +81,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       }         
 
       // display label
-      html += '<div><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
+      html += '<div id="label_container"><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
 
       // place cue image inside the cue image container (which has fixed location)
       html += '<div id="cue_container">';

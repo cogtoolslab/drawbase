@@ -81,17 +81,16 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       }         
 
       // display label
-      html += '<div id="label_container"><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
+      html += '<div id="label_container" style="display:none"><p id="cue_label"> "'+ trial.cue_label +'"</p></div>';
 
       // place cue image inside the cue image container (which has fixed location)
-      html += '<div id="cue_container">';
-
-      // display image if the condition is 'photo'
-      if (trial.condition == 'photo') {
-          // embed images inside the response button divs
-          var cue_html_replaced = trial.cue_html.replace('imageURL', trial.cue_image_url);
-          html += cue_html_replaced;        
-      } 
+      html += '<div id="cue_container" style="display:none">';
+        // display image if the condition is 'photo'
+        if (trial.condition == 'photo') {
+            // embed images inside the response button divs
+            var cue_html_replaced = trial.cue_html.replace('imageURL', trial.cue_image_url);
+            html += cue_html_replaced;        
+        } 
       html += '</div>'; 
 
       // display button to submit drawing when finished
@@ -113,6 +112,18 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // instantiate new sketchpad
       sketchpad = new Sketchpad();
       sketchpad.setupTool();
+
+      // if you need to reposition the label_container do so now
+      if (trial.condition == 'label') {
+        var label = display_element.querySelector('#label_container');
+        label.style.top = "360px";
+      }
+
+      // show the cues
+      jsPsych.pluginAPI.setTimeout(function() {
+        $('#label_container').fadeIn('fast');
+        $('#cue_container').fadeIn('fast');        
+      }, 100);
 
       // wait for the cue duration, then trigger display of the drawing canvas
       // setTimeout(function() {show_canvas(); }, trial.cue_duration);  

@@ -123,7 +123,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         $('#sketchpad_container').fadeIn('fast');
         $('#label_container').fadeIn('fast');        
-        $('#cue_container').fadeIn('fast');        
+        $('#cue_container').fadeIn('fast');       
       }, 100);
 
       // wait for the cue duration, then trigger display of the drawing canvas
@@ -139,6 +139,9 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // show the canvas
       $('#sketchpad').fadeIn('fast');
+
+      // show the submit button
+      $('#submit_button').fadeIn('fast');        
 
     }
 

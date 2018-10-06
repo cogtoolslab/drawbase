@@ -105,24 +105,24 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       // record trial start timestamp
       startTrialTime = Date.now();
 
+      // add event listener to submit button once response window opens
+      submit_button.addEventListener('click', end_trial);
+      submit_button.disabled = true; // button is disabled until at least one stroke       
+
+      // instantiate new sketchpad
+      sketchpad = new Sketchpad();
+      sketchpad.setupTool();
+
       // wait for the cue duration, then trigger display of the drawing canvas
       // setTimeout(function() {show_canvas(); }, trial.cue_duration);  
       jsPsych.pluginAPI.setTimeout(function() {show_canvas();}, trial.cue_duration);
 
     }  
 
-    function show_canvas() {  
-
-      // add event listener to submit button once response window opens
-      submit_button.addEventListener('click', end_trial);
-      submit_button.disabled = true; // button is disabled until at least one stroke      
+    function show_canvas() {       
 
       // record timestamp for start of response window
       startResponseTime = Date.now(); 
-
-      // instantiate new sketchpad
-      sketchpad = new Sketchpad();
-      sketchpad.setupTool();
 
       // show the canvas
       $('#sketchpad').fadeIn('fast');
@@ -152,7 +152,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       };
 
       // send stroke data to server
-      console.log('stroke_data',stroke_data);
       socket.emit('stroke',stroke_data);
 
     }
@@ -210,7 +209,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       paper.setup('sketchpad');
       paper.view.viewSize.width = 448;
       paper.view.viewSize.height = 448;
-      console.log('Sketchpad called');
     };
 
     Sketchpad.prototype.setupTool = function() {    
@@ -218,11 +216,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var path;
       var tool = new Tool();
 
-      console.log('setupTool called');
-
       // define mouse interaction events
       tool.onMouseDown = function(event) {        
-        console.log('onMouseDown',event.point.round());
         startStroke(event);        
       }
 
@@ -236,13 +231,11 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       };      
 
       tool.onMouseUp = function (event) {
-        console.log('onMouseUp',event.point.round());
         endStroke(event);                
       }
 
       // startStroke
       function startStroke(event) {
-          console.log('startStroke fn fired');
           if (drawingAllowed) {
             startStrokeTime = Date.now();
             // If a path is ongoing, send it along before starting this new one
@@ -262,7 +255,6 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // endStroke
       function endStroke(event) {
-        console.log('endStroke fn fired');
         // Only send stroke if actual line (single points don't get rendered)
         if (drawingAllowed && path.length > 1) {
           

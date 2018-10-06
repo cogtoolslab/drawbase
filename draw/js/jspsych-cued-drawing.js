@@ -71,7 +71,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       var html = '';
 
       // create sketchpad 
-      html += '<div id="sketchpad_container">';
+      html += '<div id="sketchpad_container" style="display:none">';
       html += '<canvas id="sketchpad" style="display:none"></canvas>';
       html += '</div>'; 
 
@@ -94,7 +94,7 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
       html += '</div>'; 
 
       // display button to submit drawing when finished
-      html += '<button id="submit_button" class="green" > submit </button>'
+      html += '<button id="submit_button" class="green" style="display:none"> submit </button>'
 
       // actually assign html to display_element.innerHTML
       display_element.innerHTML = html;
@@ -121,7 +121,8 @@ jsPsych.plugins["jspsych-cued-drawing"] = (function() {
 
       // show the cues
       jsPsych.pluginAPI.setTimeout(function() {
-        $('#label_container').fadeIn('fast');
+        $('#sketchpad_container').fadeIn('fast');
+        $('#label_container').fadeIn('fast');        
         $('#cue_container').fadeIn('fast');        
       }, 100);
 

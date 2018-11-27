@@ -17,7 +17,10 @@ First, you will need to make sure your image/video assets are hosted at a stable
 Second, you will need to generate a stimulus metadata dataframe to upload to your mongo `stimuli` database. 
 
 
-## recog
+## recognition
 
 
 ## annotate
+
+
+## rating
